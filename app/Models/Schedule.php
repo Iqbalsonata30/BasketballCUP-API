@@ -22,4 +22,13 @@ class Schedule extends Model
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s'
     ];
+
+    public function homeTeam()
+    {
+        return $this->belongsTo(Team::class, 'team_home_id', 'id');
+    }
+    public function awayTeam()
+    {
+        return $this->belongsTo(Team::class, 'team_away_id', 'id');
+    }
 }

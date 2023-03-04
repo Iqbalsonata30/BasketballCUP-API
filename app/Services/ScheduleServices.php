@@ -33,6 +33,7 @@ class ScheduleServices
             schedules.created_at,
             schedules.updated_at')
       ->get();
+
     return $schedules;
   }
 
@@ -45,7 +46,9 @@ class ScheduleServices
   public function getSpecificSchedule(Request $request, string $slug)
   {
     $teamGender = $request->query('gender', 'Putra');
-    $schedules = Team::with(['homeSchedules', 'awaySchedules'])->where(['slug' => $slug, 'team_gender' => $teamGender])->get();
+    $schedules = Team::with(['homeSchedules', 'awaySchedules'])
+      ->where(['slug' => $slug, 'team_gender' => $teamGender])
+      ->get();
     return $schedules;
   }
 

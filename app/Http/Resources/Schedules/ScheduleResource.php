@@ -19,12 +19,12 @@ class ScheduleResource extends JsonResource
         if ($request->routeIs('schedules.show')) {
             return [
                 'scheduleId'        => $this->id,
-                'homeId'            => $this->team_home_id,
-                'awayId'            => $this->team_away_id,
+                'home'            => optional($this->homeTeam)->team_name,
+                'away'            => optional($this->awayTeam)->team_name,
                 'pool'              => $this->pool,
                 'day'               => $this->day,
-                'time'              => Carbon::createFromFormat('H:i:s', $this->time)->format('H:i'),
-                'date'              => Carbon::createFromFormat('Y-m-d', $this->date)->format('d-m-Y'),
+                'time'              => $this->getTime(),
+                'date'              => $this->getDate(),
                 'createdAt'         => $this->created_at,
                 'updatedAt'         => $this->updated_at
             ];
@@ -37,11 +37,28 @@ class ScheduleResource extends JsonResource
             'away'          => $this->team_away,
             'teamGender'    => $this->team_gender,
             'day'           => $this->day,
-            'time'          => Carbon::createFromFormat('H:i:s', $this->time)->format('H:i'),
-            'date'          => Carbon::createFromFormat('Y-m-d', $this->date)->format('d-m-Y'),
+            'time'          => $this->getTime(),
+            'date'          => $this->getDate(),
             'pool'          => $this->pool,
             'createdAt'     => $this->created_at,
             'updatedAt'     => $this->updated_at
         ];
+    }
+
+    public function with($request)
+    {
+        return [
+            'homeTeam' => $this->homeTeam,
+            'awayTeam' => $this->awayTeam,
+        ];
+    }
+    private function getTime()
+    {
+        return Carbon::parse($this->time)->format('H:i');
+    }
+
+    private function getDate()
+    {
+        return Carbon::parse($this->date)->format('d-m-Y');
     }
 }
