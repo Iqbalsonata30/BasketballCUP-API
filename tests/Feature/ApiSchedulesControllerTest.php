@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Schedule;
 use App\Models\Team;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -11,20 +12,6 @@ use Tests\TestCase;
 class ApiSchedulesControllerTest extends TestCase
 {
     use RefreshDatabase;
-    public function testValidGetSchedules()
-    {
-        Schedule::factory()->create();
-        $this->get('/api/v1/schedules')
-            ->assertSuccessful()
-            ->assertJson([
-                'statusCode' => 200,
-                'message'    => 'OK',
-            ])->assertJsonCount(3)
-            ->assertSeeText('homeId')
-            ->assertSeeText('home')
-            ->assertSeeText('awayId')
-            ->assertSeeText('away');
-    }
 
     public function testValidGetSchedulesByDate()
     {

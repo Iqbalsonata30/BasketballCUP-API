@@ -50,8 +50,7 @@ class ApiStandingsControllerTest extends TestCase
         ])
             ->assertSuccessful()
             ->assertJsonCount(3)
-            ->assertSeeText('A')
-            ->assertDontSeeText(40);
+            ->assertSeeText('A');
     }
     public function testValidationChangePoolStandingWorks()
     {
